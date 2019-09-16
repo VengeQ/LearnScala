@@ -10,8 +10,8 @@ class FoldableTest extends FunSuite with Matchers{
     implicit val MonoidString:Monoid[String] = new Monoid[String]{
       override def id: String = ""
       override def combine(l: String, r: String): String = l+r
-
     }
+
     import Foldable.listMonoidFoldable
     def ic[T:Monoid] = implicitly[MonoidFoldable[String,List]]
     ic.foldLeft(list)(MonoidString.id,(x:String,y:String) => MonoidString.combine(x,y)) shouldEqual "12345"
