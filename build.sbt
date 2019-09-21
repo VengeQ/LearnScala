@@ -8,7 +8,9 @@ val akkaVersion = "2.5.25"
 
 lazy val akkaProject = (project in file("akka-example"))
   .settings(
-    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+      "com.google.inject" % "guice" % "4.1.0"),
     mainClass in assembly := Some("app.AkkaApp"),
     scalaVersion := "2.12.8"
   )
