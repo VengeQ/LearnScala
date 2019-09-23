@@ -26,14 +26,21 @@ class FunctorTest extends FunSuite with Matchers {
       override def map[A, B](in: Option[A])(f: A => B): Option[B] = in.map(f)
 
       def mapC[A, B](f: A => B): Option[A] => Option[B] = (_: Option[A]).map(f)
-
     }
 
-    val p1= {
+    val p1 = {
       associativity[Int, String, Long, Option]
-    }.check
+      }.check
     val p2 = {
       associativity[String, Int, Boolean, Option]
-    }.check
+      }.check
+  }
+
+  test("Either test") {
+    implicit def eitherFunctor[L] = new Functor[({type T[R1] = Either[L, R1]})#T] {
+      override def map[A, B](fa: Either[L, A])(fn: A => B): Either[L, B] = fa.map(fn)
+
+      override def mapC[A, B](f: A => B): Either[L, A] => Either[L, B] = x => x.map(f)
+    }
   }
 }
